@@ -327,6 +327,7 @@ public class NewUser extends javax.swing.JFrame {
                 Logger.getLogger(NewUser.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(NewUser.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Please Enter Appropriate Data");
             }
            
         }
