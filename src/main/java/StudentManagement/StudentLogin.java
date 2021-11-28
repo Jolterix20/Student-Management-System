@@ -204,7 +204,7 @@ public class StudentLogin extends javax.swing.JFrame {
                 Class.forName("com.mysql.jdbc.Driver");
                 conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studenttest", "root", "test");
                 
-                pst1 = conn.prepareStatement("select username, password, uid, english, maths, science from student1 where username = ?");
+                pst1 = conn.prepareStatement("select username, password, uid from student1 where username = ?");
                 pst1.setString(1, username);
                 
                 rs1 = pst1.executeQuery();
@@ -216,16 +216,17 @@ public class StudentLogin extends javax.swing.JFrame {
                     if(password.equals(rs1.getString(2))){
                         System.out.println("Logged in");
                         int uid = Integer.parseInt(rs1.getString(3));
-                        int english = rs1.getInt(4);
-                        int maths = rs1.getInt(5);
-                        int science = rs1.getInt(6);
                         
-                        Student student = new Student(uid, english, maths, science);
+                        Student student = new Student(uid);
                         
                         Gson gson = new Gson();
                         String user = gson.toJson(student);
                         
                         System.out.println(user);
+                        
+                        StudentHomepage sh = new StudentHomepage(user);
+                        sh.setVisible(true);
+                        this.setVisible(false);
                         
                     } else {
                         JOptionPane.showMessageDialog(this, "Incorrect Password!!");
