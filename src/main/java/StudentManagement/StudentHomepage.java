@@ -306,7 +306,7 @@ public class StudentHomepage extends javax.swing.JFrame {
         Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studenttest", "root", "test");
         
-        pst = conn.prepareStatement("select firstname, lastname, uid from student1 where uid = ?");
+        pst = conn.prepareStatement("select firstname, lastname, uid, email from student1 where uid = ?");
         pst.setInt(1, uid);
         
         rs = pst.executeQuery();
@@ -316,11 +316,13 @@ public class StudentHomepage extends javax.swing.JFrame {
         String firstName = rs.getString(1);
         String lastName = rs.getString(2);
         String _uid = String.valueOf(rs.getInt(3));
+        String email = rs.getString(4);
         
         String fullName = firstName + " " + lastName;
         
         nameField.setText(fullName);
         uidField.setText(_uid);
+        emailField.setText(email);
         
         
     }

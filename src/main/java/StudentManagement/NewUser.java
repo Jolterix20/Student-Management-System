@@ -259,6 +259,9 @@ public class NewUser extends javax.swing.JFrame {
         else if(emailField.getText().length() == 0){
             JOptionPane.showMessageDialog(this, "Please enter Email");
         }
+        else if(!emailField.getText().contains("@")){
+            JOptionPane.showMessageDialog(this, "Please check Email");
+        }
         else if(uidField.getText().length() == 0){
             JOptionPane.showMessageDialog(this, "Please enter UID");
         }

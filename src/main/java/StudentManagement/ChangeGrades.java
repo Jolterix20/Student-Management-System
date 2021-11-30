@@ -118,9 +118,19 @@ public class ChangeGrades extends javax.swing.JFrame {
 
         mathsBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         mathsBtn.setText("Maths");
+        mathsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mathsBtnActionPerformed(evt);
+            }
+        });
 
         scienceBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         scienceBtn.setText("Science");
+        scienceBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scienceBtnActionPerformed(evt);
+            }
+        });
 
         marksTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -291,7 +301,7 @@ public class ChangeGrades extends javax.swing.JFrame {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studenttest", "root", "test");
             
-            pst = conn.prepareStatement("select uid, firstname, lastname, englishmarks from student1 where english = 1");
+            pst = conn.prepareStatement("select uid, firstname, lastname, englishmarks from student1 where english = 1  order by uid");
             
             rs = pst.executeQuery();
             
@@ -447,6 +457,78 @@ public class ChangeGrades extends javax.swing.JFrame {
     private void uidFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uidFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_uidFieldActionPerformed
+
+    private void mathsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mathsBtnActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studenttest", "root", "test");
+            
+            pst = conn.prepareStatement("select uid, firstname, lastname, mathsmarks from student1 where maths = 1 order by uid");
+            
+            rs = pst.executeQuery();
+            
+            String[] columnNames = {"UID", "First Name", "Last Name", "Marks"};
+            DefaultTableModel tableModel = new DefaultTableModel(columnNames,0);
+            
+            while(rs.next()){
+                
+                String uid = String.valueOf(rs.getInt("UID"));
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                String marks = String.valueOf(rs.getInt("mathsmarks"));
+                
+                String[] data = {uid, firstName, lastName, marks};
+                tableModel.addRow(data);
+            
+            }
+            
+            marksTable.setModel(tableModel);
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChangeGrades.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeGrades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_mathsBtnActionPerformed
+
+    private void scienceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scienceBtnActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+            // TODO add your handling code here:
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studenttest", "root", "test");
+            
+            pst = conn.prepareStatement("select uid, firstname, lastname, sciencemarks from student1 where science = 1 order by uid");
+            
+            rs = pst.executeQuery();
+            
+            String[] columnNames = {"UID", "First Name", "Last Name", "Marks"};
+            DefaultTableModel tableModel = new DefaultTableModel(columnNames,0);
+            
+            while(rs.next()){
+                
+                String uid = String.valueOf(rs.getInt("UID"));
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                String marks = String.valueOf(rs.getInt("sciencemarks"));
+                
+                String[] data = {uid, firstName, lastName, marks};
+                tableModel.addRow(data);
+            
+            }
+            
+            marksTable.setModel(tableModel);
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChangeGrades.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeGrades.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_scienceBtnActionPerformed
 
     /**
      * @param args the command line arguments
